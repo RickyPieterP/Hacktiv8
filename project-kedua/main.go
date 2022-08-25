@@ -8,7 +8,7 @@ type Person struct {
 
 func main() {
 
-	var person = []Person{
+	var person = []*Person{
 		{Name: "nama1"},
 		{Name: "nama2"},
 		{Name: "nama3"},
@@ -21,13 +21,9 @@ func main() {
 		{Name: "nama10"},
 	}
 
-	printEmployee := func(in []Person) {
-		// for i := 0; i < len(in); i++ {
-		// 	fmt.Println(in[i].Name)
-		// }
-
-		for i := range in {
-			fmt.Println(in[i].Name)
+	printEmployee := func(in []*Person) {
+		for _, v := range in {
+			fmt.Println(v.Name)
 		}
 	}
 
