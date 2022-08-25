@@ -15,6 +15,10 @@ func main() {
 		}
 	}
 
+	slice()
+}
+
+func slice() {
 	// Slice
 	fmt.Println("=====================")
 	fmt.Println("2. Slice")
