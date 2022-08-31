@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
+	"sync"
 )
 
 type User struct {
-	Nama string
+	Nama string 
 }
 
 type userService struct {
@@ -25,6 +26,7 @@ func NewUserService(db []*User) UserIface {
 }
 
 func (u *userService) Register(user *User) string {
+
 	u.db = append(u.db, user)
 	return user.Nama + "berhasil didaftarkan"
 }
@@ -41,13 +43,20 @@ func (u *userService) GetUser() []*User {
 
 func main() {
 	var db []*User
+	var wg sync.WaitGroup
 	userSvc := NewUserService(db)
 
-	resRegister := userSvc.Register(&User{Nama: "nama1 "})
-	fmt.Println(resRegister)
+	names := []string{"nama1", "nama2", "nama3", "nama4", "nama5"}
 
-	resRegister = userSvc.Register(&User{Nama: "nama2 "})
-	fmt.Println(resRegister)
+	wg.Add(len(names))
+	for _, n := range names {
+		go func(name string) {
+			res := userSvc.Register(&User{Nama: name})
+			fmt.Println(res)
+			wg.Done()
+		}(n)
+	}
+	wg.Wait()
 
 	resGetUser := userSvc.GetUser()
 
