@@ -61,7 +61,3 @@ func check(in int, c chan int, p string) {
 		go put(c)
 	}
 }
-
-func loser(c chan int) {
-	
-}
