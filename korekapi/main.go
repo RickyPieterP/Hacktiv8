@@ -24,19 +24,19 @@ func main() {
 		select {
 		case v := <-p1:
 			fmt.Printf("korek ada di player 1 pada hit ke %d dan mempunyai nilai  :%d\n", i, v)
-			check(v, p1, "player1")
+			check(v, p1, "player1", i)
 
 		case v := <-p2:
 			fmt.Printf("korek ada di player 2 pada hit ke %d dan mempunyai nilai  :%d\n", i, v)
-			check(v, p2, "player2")
+			check(v, p2, "player2", i)
 
 		case v := <-p3:
 			fmt.Printf("korek ada di player 3 pada hit ke %d dan mempunyai nilai  :%d\n", i, v)
-			check(v, p3, "player 3")
+			check(v, p3, "player 3", i)
 
 		case v := <-p4:
 			fmt.Printf("korek ada di player 4 pada hit ke %d dan mempunyai nilai  :%d\n", i, v)
-			check(v, p4, "player 4")
+			check(v, p4, "player 4", i)
 
 		case <-time.After(10 * time.Second):
 			fmt.Printf("TIMEOUT \n...")
@@ -51,11 +51,11 @@ func put(c chan int) {
 	c <- rand.Intn(100) + 1
 }
 
-func check(in int, c chan int, p string) {
+func check(in int, c chan int, p string, hit int) {
 	in = in % 11
 
 	if in == 0 {
-		fmt.Printf("%s kalah\n", p)
+		fmt.Printf("%s kalah pada hit ke %d\n", p, hit)
 		os.Exit(1)
 	} else {
 		go put(c)
