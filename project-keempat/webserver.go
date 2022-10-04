@@ -3,10 +3,14 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	"time"
+
+	"github.com/gorilla/mux"
 )
 
-var PORT = ":8080"
+var PORT = "8080"
 
 type User struct {
 	Nama string `json:"nama"`
@@ -60,11 +64,26 @@ func main() {
 	var db []*User
 	userSvc := NewUserService(db)
 
-	// http.HandleFunc("/", greet)
-	http.HandleFunc("/register", userSvc.Register)
-	http.HandleFunc("/getuser", userSvc.GetUser)
+	r := mux.NewRouter()
 
-	http.ListenAndServe(PORT, nil)
+	// http.HandleFunc("/", greet)
+	r.HandleFunc("/register", userSvc.Register)
+	r.HandleFunc("/getuser", userSvc.GetUser)
+
+	srv := &http.Server{
+		Addr: "0.0.0.0:" + PORT,
+
+		WriteTimeout: time.Second * 15,
+		ReadTimeout:  time.Second * 15,
+		IdleTimeout:  time.Second * 60,
+		Handler:      r,
+	}
+
+	func() {
+		if err := srv.ListenAndServe(); err != nil {
+			log.Println(err)
+		}
+	}()
 }
 
 // func greet(w http.ResponseWriter, r *http.Request) {

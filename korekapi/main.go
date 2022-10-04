@@ -37,7 +37,7 @@ func main() {
 		case v := <-p4:
 			fmt.Printf("korek ada di player 4 pada hit ke %d dan mempunyai nilai  :%d\n", i, v)
 			check(v, p4, "player 4", i)
-
+			
 		case <-time.After(10 * time.Second):
 			fmt.Printf("TIMEOUT \n...")
 			return

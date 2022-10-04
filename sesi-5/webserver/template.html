@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <title>{{.title}}</title>
+    </head>
+    <body>
+        <div>
+            {{range $v := .data}}
+            <div>
+                ID : {{$v.ID}}
+            </div>
+            <div>
+                Name : {{$v.Name}}
+            </div>
+            <div>
+                Age : {{$v.Age}}
+            </div>
+            <div>
+                Division : {{$v.Division}}
+            </div>
+            {{end}}
+        </div>
+    </body>
+</html>
