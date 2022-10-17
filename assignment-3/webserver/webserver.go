@@ -13,8 +13,10 @@ import (
 const port = ":8081"
 
 type Status struct {
-	Water int `json:water`
-	Wind  int `json:water`
+	Water       int    `json:water`
+	WaterStatus string `json:water_status`
+	Wind        int    `json:water`
+	WindStatus  string `json:wind_status`
 }
 
 func Start() {
@@ -45,7 +47,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func getData() (out string) {
+func getData() (out Status) {
 	// Write JSON
 	writeJSON()
 
@@ -56,20 +58,23 @@ func getData() (out string) {
 	wind := data.Wind
 
 	if water < 5 {
-		out = "aman"
+		out.WaterStatus = "aman"
 	} else if water >= 6 && water <= 8 {
-		out = "siaga"
+		out.WaterStatus = "siaga"
 	} else if water > 8 {
-		out = "bahaya"
+		out.WaterStatus = "bahaya"
 	}
 
 	if wind < 6 {
-		out = "aman"
+		out.WindStatus = "aman"
 	} else if wind >= 7 && wind <= 15 {
-		out = "siaga"
+		out.WindStatus = "siaga"
 	} else if wind > 15 {
-		out = "bahaya"
+		out.WindStatus = "bahaya"
 	}
+
+	out.Water = data.Water
+	out.Wind = data.Wind
 
 	return out
 }
