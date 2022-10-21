@@ -1,1 +1,6 @@
-{"Water":28,"WaterStatus":"","Wind":74,"WindStatus":""}
+{
+    "Water": 0,
+    "WaterStatus": "",
+    "Wind": 5,
+    "WindStatus": ""
+}
